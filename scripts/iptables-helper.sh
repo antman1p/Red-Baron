@@ -1,18 +1,20 @@
 #!/bin/bash
 
 # Basic IPTABLES Template Script
-# Author: Joe Vest, Andrew Chiles
+# Author: Joe Vest, Andrew Chiles, Antonio Piazza
 
 # Description:
-#       Template script to protect ATRTO C2 infrastructure.
+#       Template script to protect C2 infrastructure.
 #
-# Note: Run this script on both your teamservers AND redirectors!
-#       AND BE SURE TO REPLACE TEAM_RANGE WITH YOUR STUDENT RANGE!
+# Note: Run this script on your teamservers!
+#
 #
 # Parameter Reference: 
-#    ALLOWED_PORTS - port allowed from the anywhere
-#    TEAM_RANGE    - IP range allowed to connect to all ports
+#    ALLOWED_PORTS - ports allowed to the team server
+#    ALLOWED_PORTS_REDIR - ports allowed to the redirector
+#    TEAM_RANGE    - skidkrew vpn public IP address range
 #    INTERFACE     - Interface name
+#    REDIR_RANGE   - Redirector IP range
 #
 # Usage
 #   1) Modify the parameters to fit your needs
@@ -21,10 +23,11 @@
 
 # TODO: ensure your listener ports are contained in the list below!!!
 ALLOWED_PORTS="50050,22"
-ALLOWED_PORTS_REDIR="443"
+ALLOWED_PORTS_REDIR="80,443"
 
 # TODO: Team Source IP Space - REPLACE THIS WITH YOUR RANGE!!!
 TEAM_RANGE="35.245.95.109"
+# Need to figure out how to populate this redir addr automatically
 REDIR_RANGE="35.236.194.228"
 
 
