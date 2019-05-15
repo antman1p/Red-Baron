@@ -20,6 +20,13 @@
 #   1) Modify the parameters to fit your needs
 #   2) run script
 
+# Check an make sure there is a command line argument.  This
+# argument needs to be the redirector's public IP
+if [ $# -lt 1 ]
+	echo "Not enough arguments"
+	exit 1
+fi
+
 
 # TODO: ensure your listener ports are contained in the list below!!!
 ALLOWED_PORTS="50050,22"
@@ -28,12 +35,13 @@ ALLOWED_PORTS_REDIR="80,443"
 # TODO: Team Source IP Space - REPLACE THIS WITH YOUR RANGE!!!
 TEAM_RANGE="35.245.95.109"
 # Need to figure out how to populate this redir addr automatically
-REDIR_RANGE="35.236.194.228"
+REDIR_RANGE= $1
 
 
 # System Settings
 INTERFACE="eth0"
 IPTABLES="/sbin/iptables"
+
 
 
 # Start of script
