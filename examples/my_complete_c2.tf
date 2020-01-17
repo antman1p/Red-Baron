@@ -15,10 +15,10 @@
 
 */
 
-// Minimum required TF version is 0.10.0
+// Minimum required TF version is 0.12.0
 
 terraform {
-  required_version = ">= 0.10.0"
+  required_version = ">= 0.12.0"
 }
 
 
