@@ -10,6 +10,7 @@ variable "machine_type" {
   default = "f1-micro"
 }
 
+// CHANGE ME to the project name
 variable "project" {
   default = "testproject-alpha-233119"
 }
