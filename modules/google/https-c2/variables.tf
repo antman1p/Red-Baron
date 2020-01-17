@@ -6,6 +6,7 @@ variable "machine_type" {
   default = "n1-standard-1"
 }
 
+// CHANGE ME to the project name
 variable "project" {
   default = "testproject-alpha-233119"
 }
