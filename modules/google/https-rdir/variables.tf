@@ -2,7 +2,7 @@ variable "redirect_to" {
   type = "list"
 }
 
-variable "count" {
+variable "count_vm" {
   default = 1
 }
 
@@ -16,7 +16,7 @@ variable "project" {
 
 variable "zones" {
   type = "list"
-  default = ["Virginia-1"]
+  default = ["Iowa-1"]
 }
 
 variable "available_zones" {

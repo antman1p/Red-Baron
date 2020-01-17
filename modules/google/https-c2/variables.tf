@@ -1,4 +1,4 @@
-variable "count" {
+variable "count_vm" {
   default = 1
 }
 
@@ -12,7 +12,7 @@ variable "project" {
 
 variable "zones" {
   type = "list"
-  default = ["Virginia-1"]
+  default = ["Iowa-1"]
 }
 
 variable "install" {

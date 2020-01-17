@@ -8,24 +8,24 @@ provider "google" {
 }
 
 resource "tls_private_key" "ssh" {
-  count = "${var.count}"
+  count = "${var.count_vm}"
   algorithm = "RSA"
   rsa_bits = 4096
 }
 
 resource "random_id" "server" {
-  count = "${var.count}"
+  count = "${var.count_vm}"
   byte_length = 4
 }
 
 resource "google_compute_instance" "https-rdir" {
-  count = "${var.count}"
+  count = "${var.count_vm}"
   machine_type = "${var.machine_type}"
   name = "https-rdir-${random_id.server.*.hex[count.index]}"
   zone = "${var.available_zones[element(var.zones, count.index)]}"
   can_ip_forward = true
   
-  tags = ["cobalt-redirectors"]
+  tags = ["redir"]
 
   boot_disk {
     initialize_params {
@@ -51,6 +51,7 @@ resource "google_compute_instance" "https-rdir" {
       type = "ssh"
       user = "root"
       private_key = "${tls_private_key.ssh.*.private_key_pem[count.index]}"
+      host = "${self.network_interface.0.access_config.0.nat_ip}"
     }
   }
 
@@ -64,7 +65,7 @@ resource "google_compute_instance" "https-rdir" {
     scopes = ["compute-rw"]
   }
 
-  metadata {
+  metadata = {
     sshKeys = "root:${tls_private_key.ssh.*.public_key_openssh[count.index]}"
   }
 

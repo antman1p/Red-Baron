@@ -8,18 +8,18 @@ provider "google" {
 }
 
 resource "tls_private_key" "ssh" {
-  count = "${var.count}"
+  count= "${var.count_vm}"
   algorithm = "RSA"
   rsa_bits = 4096
 }
 
 resource "random_id" "server" {
-  count = "${var.count}"
+  count = "${var.count_vm}"
   byte_length = 4
 }
 
 resource "google_compute_instance" "https-c2" {
-  count = "${var.count}"
+  count = "${var.count_vm}"
   machine_type = "${var.machine_type}"
   name = "https-c2-${random_id.server.*.hex[count.index]}"
   zone = "${var.available_zones[element(var.zones, count.index)]}"
@@ -35,7 +35,7 @@ resource "google_compute_instance" "https-c2" {
 
   network_interface {
     network = "default"
-    access_config = {}
+    access_config {}
   }
 
   metadata_startup_script = <<SCRIPT
@@ -48,7 +48,7 @@ resource "google_compute_instance" "https-c2" {
     scopes = ["compute-rw"]
   }
 
-  metadata {
+  metadata =  {
     sshKeys = "root:${tls_private_key.ssh.*.public_key_openssh[count.index]}"
   }
 
@@ -59,6 +59,7 @@ resource "google_compute_instance" "https-c2" {
       type = "ssh"
       user = "root"
       private_key = "${tls_private_key.ssh.*.private_key_pem[count.index]}"
+      host = "${self.network_interface.0.access_config.0.nat_ip}"	
     }
   }
 
