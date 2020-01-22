@@ -25,7 +25,7 @@ resource "google_compute_instance" "https-rdir" {
   zone = "${var.available_zones[element(var.zones, count.index)]}"
   can_ip_forward = true
   
-  tags = ["redir"]
+  tags = ["redir", "startup"]
 
   boot_disk {
     initialize_params {
@@ -34,7 +34,8 @@ resource "google_compute_instance" "https-rdir" {
   }
 
   network_interface {
-    network = "default"
+    network = "redteam-vpc"
+    subnetwork = "redteam-vpc-subnet1"
     access_config {}
   }
   
@@ -44,7 +45,7 @@ resource "google_compute_instance" "https-rdir" {
       "apt-get install -y tmux socat apache2",
       "a2enmod rewrite proxy proxy_http ssl",
       "systemctl stop apache2",
-      "tmux new -d \"socat TCP4-LISTEN:80,fork TCP4:${element(var.redirect_to, count.index)}:80\" ';' split \"socat TCP4-LISTEN:443,fork TCP4:${element(var.redirect_to, count.index)}:443\""
+     // "tmux new -d \"socat TCP4-LISTEN:80,fork TCP4:${element(var.redirect_to, count.index)}:80\" ';' split \"socat TCP4-LISTEN:443,fork TCP4:${element(var.redirect_to, count.index)}:443\""
     ]
 
     connection {

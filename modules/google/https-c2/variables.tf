@@ -8,7 +8,7 @@ variable "machine_type" {
 
 // CHANGE ME to the project name
 variable "project" {
-  default = "testproject-alpha-233119"
+  default = "box-sandbox-redteam-global"
 }
 
 variable "zones" {

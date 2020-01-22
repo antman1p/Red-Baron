@@ -25,7 +25,7 @@ resource "google_compute_instance" "https-c2" {
   zone = "${var.available_zones[element(var.zones, count.index)]}"
   can_ip_forward = true  
   
-  tags = ["teamservers"]
+  tags = ["teamservers", "startup"]
 
   boot_disk {
     initialize_params {
@@ -34,7 +34,8 @@ resource "google_compute_instance" "https-c2" {
   }
 
   network_interface {
-    network = "default"
+    network = "redteam-vpc"
+    subnetwork = "redteam-vpc-subnet1"
     access_config {}
   }
 
